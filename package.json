@@ -1,0 +1,27 @@
+{
+  "name": "kettlejs",
+  "version": "0.0.1",
+  "description": "A data structure and algorithms library written in TypeScript.",
+  "main": "dist/commonjs/index.js",
+  "types": "dist/commonjs/index.d.ts",
+  "module": "dist/esm/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/namralkeeg/kettlejs.git"
+  },
+  "author": "Larry Lopez <namralkeeg@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/namralkeeg/kettlejs/issues"
+  },
+  "homepage": "https://github.com/namralkeeg/kettlejs#readme",
+  "engines": {
+    "node": ">=10.4"
+  },
+}
