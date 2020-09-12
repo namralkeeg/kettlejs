@@ -1,15 +1,18 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface IReadOnlyCollection<T> {
   count: number;
+  contains(item: T): boolean;
+  toArray(): Array<T>;
 }
 
-interface ICollection<T> extends IReadOnlyCollection<T> {
-  isReadOnly: number;
+interface ICollection<T> {
+  count: number;
+  isReadOnly: boolean;
   add(item: T): void;
   clear(): void;
   contains(item: T): boolean;
-  copyTo(arr: T[], arrayIndex: number): void;
   remove(item: T): boolean;
+  toArray(): Array<T>;
 }
 
 interface IComparer<T> {
