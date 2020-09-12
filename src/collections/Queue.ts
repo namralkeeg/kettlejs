@@ -4,11 +4,11 @@ import { defaultEqualityComparer } from "../utils/helpers";
 const defaultCapacity = 4;
 
 class Queue<T> implements IReadOnlyCollection<T> {
-  private _storage: Array<unknown>;
-  private _size: number;
-  private _head: number;
-  private _tail: number;
-  private _comparer: IEqualityComparer<T>;
+  private storage: Array<unknown>;
+  private size: number;
+  private head: number;
+  private tail: number;
+  private internalComparer: IEqualityComparer<T>;
 
   private readonly _initialCapacity: number;
   private readonly _minimumGrow = 4;
@@ -19,60 +19,60 @@ class Queue<T> implements IReadOnlyCollection<T> {
     comparer: IEqualityComparer<T> = defaultEqualityComparer
   ) {
     this._initialCapacity = capacity < defaultCapacity ? defaultCapacity : capacity;
-    this._storage = new Array(this._initialCapacity);
-    this._size = 0;
-    this._head = 0;
-    this._tail = 0;
-    this._comparer = comparer;
+    this.storage = new Array(this._initialCapacity);
+    this.size = 0;
+    this.head = 0;
+    this.tail = 0;
+    this.internalComparer = comparer;
   }
 
   private setCapacity(capacity: number): void {
     const newArray = new Array<unknown>(capacity);
 
-    if (this._size > 0) {
-      if (this._head < this._tail) {
-        newArray.splice(0, this._size, this._storage.slice(this._head, this._storage.length));
+    if (this.size > 0) {
+      if (this.head < this.tail) {
+        newArray.splice(0, this.size, this.storage.slice(this.head, this.storage.length));
       } else {
         newArray.splice(
           0,
-          this._storage.length - this._head,
-          this._storage.slice(this._head, this._storage.length)
+          this.storage.length - this.head,
+          this.storage.slice(this.head, this.storage.length)
         );
         newArray.splice(
-          this._storage.length - this._head,
-          this._tail,
-          this._storage.slice(0, this._tail)
+          this.storage.length - this.head,
+          this.tail,
+          this.storage.slice(0, this.tail)
         );
       }
     }
 
-    this._storage = newArray;
-    this._head = 0;
-    this._tail = this._size == capacity ? 0 : this._size;
+    this.storage = newArray;
+    this.head = 0;
+    this.tail = this.size == capacity ? 0 : this.size;
   }
 
   private getElement(index: number): T | null {
-    if (index >= this._size) {
+    if (index >= this.size) {
       return null;
     }
 
-    return this._storage[(this._head + index) % this._storage.length] as T;
+    return this.storage[(this.head + index) % this.storage.length] as T;
   }
 
   public get comparer(): IEqualityComparer<T> {
-    return this._comparer;
+    return this.internalComparer;
   }
 
   public set comparer(comparer: IEqualityComparer<T>) {
-    this._comparer = comparer;
+    this.internalComparer = comparer;
   }
 
   public get count(): number {
-    return this._size;
+    return this.size;
   }
 
   public get isEmpty(): boolean {
-    return this._size <= 0;
+    return this.size <= 0;
   }
 
   public get isReadOnly(): boolean {
@@ -80,24 +80,24 @@ class Queue<T> implements IReadOnlyCollection<T> {
   }
 
   public clear(): void {
-    this._storage = new Array(this._initialCapacity);
-    this._size = 0;
-    this._head = 0;
-    this._tail = 0;
+    this.storage = new Array(this._initialCapacity);
+    this.size = 0;
+    this.head = 0;
+    this.tail = 0;
   }
 
   public enqueue(item: T): void {
-    if (this._size == this._storage.length) {
-      let newCapacity = this._storage.length * this._growFactor;
-      if (newCapacity < this._storage.length + this._minimumGrow) {
-        newCapacity = this._storage.length + this._minimumGrow;
+    if (this.size == this.storage.length) {
+      let newCapacity = this.storage.length * this._growFactor;
+      if (newCapacity < this.storage.length + this._minimumGrow) {
+        newCapacity = this.storage.length + this._minimumGrow;
       }
       this.setCapacity(newCapacity);
     }
 
-    this._storage[this._tail] = item;
-    this._tail = (this._tail + 1) % this._storage.length;
-    this._size++;
+    this.storage[this.tail] = item;
+    this.tail = (this.tail + 1) % this.storage.length;
+    this.size++;
   }
 
   public add(item: T): void {
@@ -105,60 +105,60 @@ class Queue<T> implements IReadOnlyCollection<T> {
   }
 
   public dequeue(): T | null {
-    if (this._size === 0) {
+    if (this.size === 0) {
       return null;
     }
 
-    const removed = this._storage[this._head] as T;
-    this._storage[this._head] = null;
-    this._head = (this._head + 1) % this._storage.length;
-    this._size--;
+    const removed = this.storage[this.head] as T;
+    this.storage[this.head] = null;
+    this.head = (this.head + 1) % this.storage.length;
+    this.size--;
 
     return removed;
   }
 
   public peek(): T | null {
-    if (this._size === 0) {
+    if (this.size === 0) {
       return null;
     }
 
-    return this._storage[this._head] as T;
+    return this.storage[this.head] as T;
   }
 
   public contains(item: T, comparer?: IEqualityComparer<T>): boolean {
-    const equals = comparer || this._comparer || defaultEqualityComparer;
-    let index = this._head;
-    let count = this._size;
+    const equals = comparer || this.internalComparer || defaultEqualityComparer;
+    let index = this.head;
+    let count = this.size;
 
     while (count-- > 0) {
-      if (equals(item, this._storage[index] as T)) {
+      if (equals(item, this.storage[index] as T)) {
         return true;
       }
-      index = (index + 1) % this._storage.length;
+      index = (index + 1) % this.storage.length;
     }
 
     return false;
   }
 
   public forEach(callback: ILoopCallback<T>): void {
-    let index = this._head;
-    let count = this._size;
+    let index = this.head;
+    let count = this.size;
 
     while (count-- > 0) {
-      this._storage[index] = callback(this._storage[index] as T);
-      index = (index + 1) % this._storage.length;
+      this.storage[index] = callback(this.storage[index] as T);
+      index = (index + 1) % this.storage.length;
     }
   }
 
   public toArray(): Array<T> {
     const newArray = new Array<T>();
 
-    if (this._size > 0) {
-      if (this._head < this._tail) {
-        newArray.concat(this._storage.slice(this._head, this._storage.length) as Array<T>);
+    if (this.size > 0) {
+      if (this.head < this.tail) {
+        newArray.concat(this.storage.slice(this.head, this.storage.length) as Array<T>);
       } else {
-        newArray.concat(this._storage.slice(this._head, this._storage.length) as Array<T>);
-        newArray.concat(this._storage.slice(0, this._tail) as Array<T>);
+        newArray.concat(this.storage.slice(this.head, this.storage.length) as Array<T>);
+        newArray.concat(this.storage.slice(0, this.tail) as Array<T>);
       }
     }
 
@@ -166,8 +166,8 @@ class Queue<T> implements IReadOnlyCollection<T> {
   }
 
   public trimExcess(): void {
-    const threshold = Math.floor(this._size * 0.9);
-    if (this._size < threshold) {
+    const threshold = Math.floor(this.size * 0.9);
+    if (this.size < threshold) {
       this.setCapacity(threshold);
     }
   }
