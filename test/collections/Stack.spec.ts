@@ -8,6 +8,10 @@ test("Pop", () => {
   stack.push(1);
   stack.push(2);
   stack.push(3);
+  stack.push(4);
+  stack.push(5);
+  expect(stack.pop()).toEqual(5);
+  expect(stack.pop()).toEqual(4);
   expect(stack.pop()).toEqual(3);
   expect(stack.pop()).toEqual(2);
   expect(stack.pop()).toEqual(1);
@@ -60,11 +64,15 @@ test("Correct Count", () => {
   stack.push(1);
   stack.push(2);
   stack.push(3);
-  expect(stack.count).toEqual(3);
+  stack.push(4);
+  stack.push(5);
+  expect(stack.count).toEqual(5);
 
   stack.peek();
-  expect(stack.count).toEqual(3);
+  expect(stack.count).toEqual(5);
 
+  stack.pop();
+  stack.pop();
   stack.pop();
   stack.pop();
   stack.pop();
