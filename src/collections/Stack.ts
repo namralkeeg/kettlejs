@@ -62,21 +62,21 @@ class Stack<T> implements IReadOnlyCollection<T> {
     }
   }
 
-  public peek(): T | undefined {
-    if (this._size === 0 || this._storage[this._size - 1] == undefined) {
-      return undefined;
+  public peek(): T | null {
+    if (this._size === 0 || this._storage[this._size - 1] == null) {
+      return null;
     }
 
     return this._storage[this._size - 1] as T;
   }
 
-  public pop(): T | undefined {
-    if (this._size === 0 || this._storage[this._size - 1] == undefined) {
-      return undefined;
+  public pop(): T | null {
+    if (this._size === 0 || this._storage[this._size - 1] == null) {
+      return null;
     }
 
     const item: T = this._storage[this._size - 1] as T;
-    this._storage[--this._size] = undefined;
+    this._storage[--this._size] = null;
 
     return item;
   }

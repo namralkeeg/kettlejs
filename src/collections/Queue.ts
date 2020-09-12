@@ -51,9 +51,9 @@ class Queue<T> implements IReadOnlyCollection<T> {
     this._tail = this._size == capacity ? 0 : this._size;
   }
 
-  private getElement(index: number): T | undefined {
+  private getElement(index: number): T | null {
     if (index >= this._size) {
-      return undefined;
+      return null;
     }
 
     return this._storage[(this._head + index) % this._storage.length] as T;
@@ -104,22 +104,22 @@ class Queue<T> implements IReadOnlyCollection<T> {
     this.enqueue(item);
   }
 
-  public dequeue(): T | undefined {
+  public dequeue(): T | null {
     if (this._size === 0) {
-      return undefined;
+      return null;
     }
 
     const removed = this._storage[this._head] as T;
-    this._storage[this._head] = undefined;
+    this._storage[this._head] = null;
     this._head = (this._head + 1) % this._storage.length;
     this._size--;
 
     return removed;
   }
 
-  public peek(): T | undefined {
+  public peek(): T | null {
     if (this._size === 0) {
-      return undefined;
+      return null;
     }
 
     return this._storage[this._head] as T;
