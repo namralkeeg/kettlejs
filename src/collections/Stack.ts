@@ -3,7 +3,7 @@ import { defaultEqualityComparer } from "../utils/helpers";
 
 const defaultCapacity = 4;
 
-class Stack<T> implements IReadOnlyCollection<T> {
+class Stack<T> implements IReadOnlyCollection<T>, Iterable<T> {
   private storage: Array<unknown>;
   private size: number;
   private readonly initialCapacity: number;
@@ -17,6 +17,23 @@ class Stack<T> implements IReadOnlyCollection<T> {
     this.storage = new Array(this.initialCapacity);
     this.size = 0;
     this.internalComparer = comparer;
+  }
+
+  [Symbol.iterator](): Iterator<T> {
+    const storage = this.storage;
+    let index = this.size - 1;
+
+    const iterator = {
+      next(): IteratorResult<T> {
+        if (index < 0) {
+          return { value: undefined, done: true };
+        } else {
+          return { value: storage[index--] as T, done: false };
+        }
+      }
+    };
+
+    return iterator;
   }
 
   public get comparer(): IEqualityComparer<T> {
