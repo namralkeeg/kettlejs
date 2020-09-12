@@ -12,7 +12,6 @@ class Queue<T> implements IReadOnlyCollection<T> {
 
   private readonly _initialCapacity: number;
   private readonly _minimumGrow = 4;
-  private readonly _shrinkThreshold = 32;
   private readonly _growFactor = 2;
 
   constructor(
@@ -74,6 +73,10 @@ class Queue<T> implements IReadOnlyCollection<T> {
 
   public get isEmpty(): boolean {
     return this._size <= 0;
+  }
+
+  public get isReadOnly(): boolean {
+    return false;
   }
 
   public clear(): void {
@@ -142,9 +145,7 @@ class Queue<T> implements IReadOnlyCollection<T> {
     let count = this._size;
 
     while (count-- > 0) {
-      if (callback(this._storage[index] as T) === false) {
-        break;
-      }
+      this._storage[index] = callback(this._storage[index] as T);
       index = (index + 1) % this._storage.length;
     }
   }

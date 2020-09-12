@@ -96,9 +96,7 @@ class Stack<T> implements IReadOnlyCollection<T> {
 
   public forEach(callback: ILoopCallback<T>): void {
     for (let i = this._size - 1; i >= 0; i--) {
-      if (callback(this._storage[i] as T) === false) {
-        break;
-      }
+      this._storage[i] = callback(this._storage[i] as T);
     }
   }
 

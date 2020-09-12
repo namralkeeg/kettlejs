@@ -24,7 +24,7 @@ interface IEqualityComparer<T> {
 }
 
 interface ILoopCallback<T> {
-  (x: T): boolean | null;
+  (x: T): T;
 }
 
 export { IReadOnlyCollection, ICollection, IComparer, IEqualityComparer, ILoopCallback };
