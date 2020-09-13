@@ -3,7 +3,7 @@ import { defaultEqualityComparer } from "../utils/helpers";
 
 const defaultCapacity = 4;
 
-class Queue<T> implements IReadOnlyCollection<T> {
+class Queue<T> implements IReadOnlyCollection<T>, Iterable<T> {
   private storage: Array<unknown>;
   private size: number;
   private head: number;
@@ -77,6 +77,30 @@ class Queue<T> implements IReadOnlyCollection<T> {
 
   public get isReadOnly(): boolean {
     return false;
+  }
+
+  [Symbol.iterator](): Iterator<T> {
+    const storage = this.storage;
+    const size = this.size;
+    let index = this.head;
+    let count = size;
+
+    const iterator = {
+      next(): IteratorResult<T> {
+        let item: IteratorResult<T>;
+
+        if (count-- < 0) {
+          item = { value: undefined, done: true };
+        } else {
+          item = { value: storage[index] as T, done: false };
+          index = (index + 1) % size;
+        }
+
+        return item;
+      }
+    };
+
+    return iterator;
   }
 
   public clear(): void {
