@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface IReadOnlyCollection<T> {
   count: number;
-  contains(item: T): boolean;
+  contains(item: T, comparer?: IEqualityComparer<T>): boolean;
   toArray(): Array<T>;
 }
 
@@ -10,7 +10,7 @@ interface ICollection<T> {
   isReadOnly: boolean;
   add(item: T): void;
   clear(): void;
-  contains(item: T): boolean;
+  contains(item: T, comparer?: IEqualityComparer<T>): boolean;
   remove(item: T): boolean;
   toArray(): Array<T>;
 }
