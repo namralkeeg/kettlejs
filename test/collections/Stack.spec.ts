@@ -3,7 +3,7 @@ import Stack from "../../src/collections/Stack";
 test("Pop", () => {
   const stack = new Stack<number>();
 
-  expect(stack.pop()).toEqual(null);
+  expect(stack.pop()).toEqual(undefined);
 
   stack.push(1);
   stack.push(2);
@@ -26,7 +26,7 @@ test("Pushes and Pops", () => {
   expect(stack.pop()).toEqual(2);
   stack.push(3);
   expect(stack.pop()).toEqual(3);
-  expect(stack.pop()).toEqual(null);
+  expect(stack.pop()).toEqual(undefined);
 });
 
 test("Peeks", () => {
@@ -41,13 +41,13 @@ test("Peeks", () => {
   stack.pop();
   expect(stack.peek()).toEqual(1);
   stack.pop();
-  expect(stack.peek()).toEqual(null);
+  expect(stack.peek()).toEqual(undefined);
 });
 
 test("Pushes and peeks", () => {
   const stack = new Stack<number>();
 
-  expect(stack.peek()).toEqual(null);
+  expect(stack.peek()).toEqual(undefined);
   stack.push(1);
   expect(stack.peek()).toEqual(1);
   stack.push(2);
