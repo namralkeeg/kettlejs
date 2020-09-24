@@ -51,9 +51,9 @@ class Queue<T> implements IReadOnlyCollection<T>, Iterable<T> {
     this.tail = this.size == capacity ? 0 : this.size;
   }
 
-  private getElement(index: number): T | null {
+  private getElement(index: number): T | undefined {
     if (index >= this.size) {
-      return null;
+      return undefined;
     }
 
     return this.storage[(this.head + index) % this.storage.length] as T;
@@ -64,7 +64,7 @@ class Queue<T> implements IReadOnlyCollection<T>, Iterable<T> {
   }
 
   public set comparer(comparer: IEqualityComparer<T>) {
-    this.internalComparer = comparer;
+    this.internalComparer = comparer ?? defaultEqualityComparer;
   }
 
   public get count(): number {
@@ -128,22 +128,22 @@ class Queue<T> implements IReadOnlyCollection<T>, Iterable<T> {
     this.enqueue(item);
   }
 
-  public dequeue(): T | null {
+  public dequeue(): T | undefined {
     if (this.size === 0) {
-      return null;
+      return undefined;
     }
 
     const removed = this.storage[this.head] as T;
-    this.storage[this.head] = null;
+    this.storage[this.head] = undefined;
     this.head = (this.head + 1) % this.storage.length;
     this.size--;
 
     return removed;
   }
 
-  public peek(): T | null {
+  public peek(): T | undefined {
     if (this.size === 0) {
-      return null;
+      return undefined;
     }
 
     return this.storage[this.head] as T;

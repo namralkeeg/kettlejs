@@ -16,7 +16,7 @@ class Stack<T> implements IReadOnlyCollection<T>, Iterable<T> {
     this.initialCapacity = capacity;
     this.storage = new Array(this.initialCapacity);
     this.size = 0;
-    this.internalComparer = comparer;
+    this.internalComparer = comparer ?? defaultEqualityComparer;
   }
 
   [Symbol.iterator](): Iterator<T> {
@@ -41,7 +41,7 @@ class Stack<T> implements IReadOnlyCollection<T>, Iterable<T> {
   }
 
   public set comparer(comparer: IEqualityComparer<T>) {
-    this.internalComparer = comparer;
+    this.internalComparer = comparer ?? defaultEqualityComparer;
   }
 
   public get count(): number {
@@ -79,21 +79,21 @@ class Stack<T> implements IReadOnlyCollection<T>, Iterable<T> {
     }
   }
 
-  public peek(): T | null {
-    if (this.size === 0 || this.storage[this.size - 1] == null) {
-      return null;
+  public peek(): T | undefined {
+    if (this.size === 0 || this.storage[this.size - 1] == undefined) {
+      return undefined;
     }
 
     return this.storage[this.size - 1] as T;
   }
 
-  public pop(): T | null {
-    if (this.size === 0 || this.storage[this.size - 1] == null) {
-      return null;
+  public pop(): T | undefined {
+    if (this.size === 0 || this.storage[this.size - 1] == undefined) {
+      return undefined;
     }
 
     const item: T = this.storage[this.size - 1] as T;
-    this.storage[--this.size] = null;
+    this.storage[--this.size] = undefined;
 
     return item;
   }
@@ -101,7 +101,7 @@ class Stack<T> implements IReadOnlyCollection<T>, Iterable<T> {
   public push(item: T): void {
     if (this.size === this.storage.length) {
       this.storage.length =
-        this.storage.length == 0 ? defaultCapacity : this.storage.length * 2;
+        this.storage.length === 0 ? defaultCapacity : this.storage.length * 2;
     }
 
     this.storage[this.size++] = item;
