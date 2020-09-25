@@ -169,7 +169,7 @@ class Queue<T> implements IReadOnlyCollection<T>, Iterable<T> {
     let count = this.size;
 
     while (count-- > 0) {
-      this.storage[index] = callback(this.storage[index] as T);
+      callback(this.storage[index] as T);
       index = (index + 1) % this.storage.length;
     }
   }

@@ -104,12 +104,17 @@ test("Iteration Order", () => {
 
 test("forEach check", () => {
   const stack = new Stack<number>();
-  stack.push(1);
-  stack.push(2);
-  stack.push(3);
 
-  stack.forEach((x) => x * 2);
-  expect(stack.pop()).toEqual(6);
-  expect(stack.pop()).toEqual(4);
-  expect(stack.pop()).toEqual(2);
+  stack.forEach((e) => {
+    expect(e).toEqual(e); // Should never get here.
+  });
+
+  for (let i = 0; i < 10; i++) {
+    stack.push(i);
+  }
+
+  let i = stack.count - 1;
+  stack.forEach((e) => {
+    expect(e).toEqual(i--);
+  });
 });

@@ -1,3 +1,5 @@
+import { EqualityResult } from "./types";
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface IReadOnlyCollection<T> {
   count: number;
@@ -16,7 +18,7 @@ interface ICollection<T> {
 }
 
 interface IComparer<T> {
-  (x: T, y: T): number;
+  (x: T, y: T): EqualityResult;
 }
 
 interface IEqualityComparer<T> {
@@ -24,7 +26,19 @@ interface IEqualityComparer<T> {
 }
 
 interface ILoopCallback<T> {
-  (x: T): T;
+  (x: T): void;
 }
 
-export { IReadOnlyCollection, ICollection, IComparer, IEqualityComparer, ILoopCallback };
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+interface IToString {
+  toString(): string;
+}
+
+export {
+  IReadOnlyCollection,
+  ICollection,
+  IComparer,
+  IEqualityComparer,
+  ILoopCallback,
+  IToString
+};

@@ -113,7 +113,7 @@ class Stack<T> implements IReadOnlyCollection<T>, Iterable<T> {
 
   public forEach(callback: ILoopCallback<T>): void {
     for (let i = this.size - 1; i >= 0; i--) {
-      this.storage[i] = callback(this.storage[i] as T);
+      callback(this.storage[i] as T);
     }
   }
 
