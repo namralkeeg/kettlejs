@@ -161,8 +161,9 @@ class Dictionary<K extends IToString, V> {
 
     const hash = hashCode(key.toString());
     const item: V | undefined = this.table[hash]?.value;
+    this.table[hash] = { key, value };
+
     if (!isDefined(item)) {
-      this.table[hash] = { key, value };
       this.size++;
     }
 
