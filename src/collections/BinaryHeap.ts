@@ -115,7 +115,9 @@ abstract class BinaryHeap<T> {
     }
   }
 
-  // public abstract remove(item: T): boolean;
+  public toArray(): T[] {
+    return this._items.slice(0, this._count) as T[];
+  }
 }
 
 export { BinaryHeap };
