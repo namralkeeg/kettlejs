@@ -1,3 +1,5 @@
+import { EqualityResult } from "../collections/types";
+
 const primes = [
   3,
   7,
@@ -133,7 +135,7 @@ const defaultEqualityComparer = <T>(x: T, y: T): boolean => {
   return x === y;
 };
 
-const defaultComparer = <T>(x: T, y: T): number => {
+const defaultComparer = <T>(x: T, y: T): EqualityResult => {
   if (x < y) {
     return -1;
   }
