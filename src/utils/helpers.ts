@@ -1,4 +1,4 @@
-import { EqualityResult } from "../collections/types";
+import { EqualityResult } from "../common/types";
 
 const primes = [
   3,

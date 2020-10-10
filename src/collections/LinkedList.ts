@@ -1,4 +1,4 @@
-import { IReadOnlyCollection, IEqualityComparer, ICollection } from "./interfaces";
+import { IReadOnlyCollection, IEqualityComparer, ICollection } from "../common/interfaces";
 import { defaultEqualityComparer } from "../utils/helpers";
 
 interface ILinkedListNode<T> {

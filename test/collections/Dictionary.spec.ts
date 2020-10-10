@@ -1,5 +1,5 @@
 import Dictionary from "../../src/collections/Dictionary";
-import { IToString } from "../../src/collections/interfaces";
+import { IToString } from "../../src/common/interfaces";
 
 describe("Dictionary", () => {
   // let dict: Dictionary<string, number>;

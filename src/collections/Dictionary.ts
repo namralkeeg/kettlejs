@@ -1,4 +1,4 @@
-import { IEqualityComparer, IToString } from "./interfaces";
+import { IEqualityComparer, IToString } from "../common/interfaces";
 import {
   defaultEqualityComparer,
   hashCode,

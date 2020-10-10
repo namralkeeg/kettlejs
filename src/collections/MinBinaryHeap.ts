@@ -1,5 +1,5 @@
 import BinaryHeap from "./BinaryHeap";
-import { IComparer } from "./interfaces";
+import { IComparer } from "../common/interfaces";
 import { swap } from "../utils/arrays";
 
 class MinBinaryHeap<T> extends BinaryHeap<T> {

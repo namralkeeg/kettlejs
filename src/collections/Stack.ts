@@ -1,4 +1,4 @@
-import { IReadOnlyCollection, IEqualityComparer, ILoopCallback } from "./interfaces";
+import { IReadOnlyCollection, IEqualityComparer, ILoopCallback } from "../common/interfaces";
 import { defaultEqualityComparer } from "../utils/helpers";
 
 const defaultCapacity = 4;

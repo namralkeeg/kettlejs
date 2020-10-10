@@ -1,5 +1,5 @@
 import { defaultComparer } from "../utils/helpers";
-import { IComparer } from "./interfaces";
+import { IComparer } from "../common/interfaces";
 
 abstract class BinaryHeap<T> {
   protected _growFactor = 2;
